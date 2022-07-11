@@ -4,7 +4,6 @@ echo "[theme]
 primaryColor = ‘#d33682’
 backgroundColor = ‘#002b36’
 secondaryBackgroundColor = ‘#586e75’
-base= ‘dark’
 font = ‘monospace’
 [server]
 headless = true
