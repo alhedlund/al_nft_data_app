@@ -377,3 +377,98 @@ def get_eth_vs_sol_nft_stats(months, date_trunc) -> pd.DataFrame:
 
     except KeyError:
         logger.error("Query failed to execute, please confirm syntax")
+
+def get_cumltv_nft_stats(months) -> pd.DataFrame:
+    """
+
+    :return:
+    """
+    query = f"""
+    with
+        sol_price as (
+        
+          select
+        
+            date_trunc('hour',block_timestamp) as date_hour,
+        
+            case
+                when swap_to_mint = 'So11111111111111111111111111111111111111112' then swap_to_mint
+                else swap_from_mint
+            end as token_address,
+        
+            sum(case when swap_to_mint = 'So11111111111111111111111111111111111111112' then swap_from_amount else swap_to_amount end) as stable_amount,
+            sum(case when swap_to_mint = 'So11111111111111111111111111111111111111112' then swap_to_amount else swap_from_amount end) as token_amount,
+        
+            stable_amount / token_amount as token_price
+        
+          from solana.core.fact_swaps swaps
+          where succeeded = TRUE
+            and block_timestamp >= current_date() - interval '{months} months'
+            and (swap_from_mint = 'So11111111111111111111111111111111111111112'
+                or swap_to_mint = 'So11111111111111111111111111111111111111112')
+            and (swap_from_mint in ('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v','Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB')
+                or swap_to_mint in ('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v','Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'))
+          group by 1,2
+        ),
+    
+        sol_volume as (
+        
+          select
+        
+            block_timestamp,
+            'Solana' as blockchain,
+            sales_amount * token_price as price_usd
+        
+          from solana.core.fact_nft_sales sales 
+          left join sol_price
+            on date_trunc('hour',sales.block_timestamp) = sol_price.date_hour
+          inner join solana.core.fact_transactions
+            using(block_timestamp,tx_id)
+          inner join lateral flatten(input => inner_instructions, recursive => TRUE) f
+          where sales.block_timestamp >= current_date() - interval '{months} months'
+            and sales_amount * token_price < 1e7
+            and sales_amount * token_price >= 1
+            and sales.succeeded
+            and f.key = 'destination'
+            and f.this:lamports::int > 0
+          qualify row_number() over (partition by tx_id order by f.this:lamports::int desc) = 1
+        ),
+    
+        eth_volume as (
+        
+          select
+        
+            block_timestamp,
+            'Ethereum' as blockchain,
+            price_usd
+        
+          from ethereum.core.ez_nft_sales
+          where block_timestamp >= current_date() - interval '{months} months'
+            and price_usd < 1e7
+            and price_usd >= 1
+        )
+    
+    select
+    
+        blockchain,
+        count(1) as trades,
+        sum(price_usd) as volume_usd
+    
+    from (select * from sol_volume union all select * from eth_volume)
+    group by 1
+    order by blockchain
+    """
+    t_1 = time.time()
+    logger.info("Executing query...")
+
+    try:
+        df = query_to_df(query)
+
+        t_2 = time.time()
+
+        logger.info(f"Query was executed in: {t_2 - t_1}")
+
+        return df
+
+    except KeyError:
+        logger.error("Query failed to execute, please confirm syntax")

@@ -5,7 +5,7 @@ from PIL import Image
 
 # Custom imports
 from multipage import MultiPage
-from pages import trending, events, definitions, collections # import your pages here
+from pages import trending, eth_vs_sol, definitions, collections # import your pages here
 
 # Create an instance of the app
 app = MultiPage()
@@ -22,11 +22,8 @@ col2.title("AnonLabs Data")
 # Add all your application here
 app.add_page("Trending Collections", trending.app)
 app.add_page("Collection Stats", collections.app)
-# app.add_page("Collection Events", events.app)
-# app.add_page("Wallet Data", wallets.app)
-# app.add_page("Collection Assets", assets.app)
-# app.add_page("Asset Rarity", rarity.app)
 app.add_page("Metric Definitions", definitions.app)
+app.add_page("Eth vs. Sol NFT Stats", eth_vs_sol.app)
 
 # The main app
 app.run()
