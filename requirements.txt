@@ -8,3 +8,4 @@ web3==5.29.2
 python-dotenv==0.19.1
 shroomdk
 plotly
+loguru
