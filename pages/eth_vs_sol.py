@@ -5,13 +5,10 @@ import plotly.express as px
 
 from utils.helper_functions import add_pct_change_cols
 
-st.set_page_config(layout="wide")
-
 
 def app():
     original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">Ethereum vs Solana: NFT Trading Activity</p>'
     st.markdown(original_title, unsafe_allow_html=True)
-    # st.title("Ethereum vs Solana: NFT Trading Activity")
 
     date_trunc_choices = ['week', 'month']
     date_trunc = st.sidebar.selectbox("date_trunc", date_trunc_choices)
