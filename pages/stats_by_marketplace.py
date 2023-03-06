@@ -1,4 +1,3 @@
-import pandas as pd
 import streamlit as st
 import data.mktplace_data_extract as mde
 import plotly.express as px
@@ -7,7 +6,7 @@ from utils.helper_functions import add_pct_change_cols, add_avg_trade_size_by_mk
 
 
 def app():
-    original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">Ethereum & Solana: NFT Stats by Marketplace</p>'
+    original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">ETH & SOL: NFT Stats by Marketplace</p>'
     st.markdown(original_title, unsafe_allow_html=True)
 
     date_trunc_choices = ['week', 'month']
@@ -136,8 +135,8 @@ def app():
         #############
         st.write("ETH NFT Creator Fees (USD) by Marketplace")
         fig = px.bar(trans_eth_df, x="date", y="creator_fee_usd",
-                           color='marketplace',
-                           height=400)
+                     color='marketplace',
+                     height=400)
 
         fig.update_layout(yaxis_title=None, xaxis_title=None)
 
@@ -156,8 +155,8 @@ def app():
         #############
         st.write("SOL NFT Volume (USD) by Marketplace")
         fig_3 = px.bar(trans_sol_df, x="date", y="volume_usd",
-                           color='marketplace',
-                           height=400)
+                       color='marketplace',
+                       height=400)
 
         fig_3.update_layout(yaxis_title=None, xaxis_title=None)
 

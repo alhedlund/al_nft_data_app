@@ -23,7 +23,7 @@ col2.title("AnonLabs Data Platform")
 
 # Add all your application here
 app.add_page("NFT Market Overview", nft_mkt_overview.app)
-app.add_page("ETH vs. Sol NFT Stats", eth_vs_sol.app)
+app.add_page("ETH vs. SOL NFT Stats", eth_vs_sol.app)
 app.add_page("ETH & SOL NFT Stats by Marketplace", stats_by_marketplace.app)
 app.add_page("Trending NFT Collections", trending.app)
 app.add_page("NFT Collection Stats", collections.app)

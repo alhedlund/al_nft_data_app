@@ -1,4 +1,3 @@
-import pandas as pd
 import streamlit as st
 import data.data_extract as de
 import plotly.express as px
@@ -108,6 +107,8 @@ def app():
         fig_3 = px.line(avg_wallet_vol_daily_df, x="utc_date", y=vol_wallet_col_name,
                       height=400)
 
+        fig_3.update_layout(yaxis_title=None, xaxis_title=None)
+
         st.plotly_chart(fig_3, theme='streamlit', use_container_width=True)
 
         st.write("Volume per Wallet")
@@ -129,6 +130,8 @@ def app():
         st.write("Daily Avg. Transactions Per Wallet")
         fig_4 = px.line(txns_per_wallet_daily_df, x="utc_date", y="transactions_per_wallet",
                         height=400)
+
+        fig_4.update_layout(yaxis_title=None, xaxis_title=None)
 
         st.plotly_chart(fig_4, theme='streamlit', use_container_width=True)
 
@@ -157,6 +160,8 @@ def app():
         fig_5 = px.line(daily_avg_txn_amt_df, x="utc_date", y=avg_txn_amt_col_name,
                         height=400)
 
+        fig_5.update_layout(yaxis_title=None, xaxis_title=None)
+
         st.plotly_chart(fig_5, theme='streamlit', use_container_width=True)
 
         st.write("Volume per Transaction")
@@ -184,6 +189,8 @@ def app():
         fig_6 = px.line(daily_creator_fee_df, x="utc_date", y=creator_fee_col_name,
                         height=400)
 
+        fig_6.update_layout(yaxis_title=None, xaxis_title=None)
+
         st.plotly_chart(fig_6, theme='streamlit', use_container_width=True)
 
         st.write("Creator Fees")
@@ -210,6 +217,8 @@ def app():
         st.write("Daily Platform Fees")
         fig_7 = px.line(daily_platform_fee_df, x="utc_date", y=plat_fee_col_name,
                         height=400)
+
+        fig_7.update_layout(yaxis_title=None, xaxis_title=None)
 
         st.plotly_chart(fig_7, theme='streamlit', use_container_width=True)
 

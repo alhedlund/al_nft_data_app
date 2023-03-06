@@ -12,7 +12,8 @@ API_KEY = os.getenv('API_KEY')
 
 
 def app():
-    st.title("Trending Collections")
+    original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">Trending NFT Collections</p>'
+    st.markdown(original_title, unsafe_allow_html=True)
 
     trending_sort_choices = ['SALES', 'VOLUME', 'FLOOR', 'AVERAGE']
     sort_by = st.sidebar.selectbox("Trending By:", trending_sort_choices)

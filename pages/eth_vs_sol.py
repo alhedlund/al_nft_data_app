@@ -1,4 +1,3 @@
-import pandas as pd
 import streamlit as st
 import data.data_extract as de
 import plotly.express as px
@@ -7,7 +6,7 @@ from utils.helper_functions import add_pct_change_cols
 
 
 def app():
-    original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">Ethereum vs Solana: NFT Trading Activity</p>'
+    original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">ETH vs. SOL: NFT Trading Activity</p>'
     st.markdown(original_title, unsafe_allow_html=True)
 
     date_trunc_choices = ['week', 'month']
@@ -96,6 +95,8 @@ def app():
                            color='blockchain', barmode='group',
                            height=400)
 
+        fig_3.update_layout(yaxis_title=None, xaxis_title=None)
+
         st.plotly_chart(fig_3, theme='streamlit', use_container_width=True)
 
         #############
@@ -114,6 +115,8 @@ def app():
                            color='blockchain', barmode='group',
                            height=400)
 
+        fig_5.update_layout(yaxis_title=None, xaxis_title=None)
+
         st.plotly_chart(fig_5, theme='streamlit', use_container_width=True)
 
         #############
@@ -131,6 +134,8 @@ def app():
         fig_7 = px.histogram(trans_df, x="date", y="trades",
                            color='blockchain', barmode='group',
                            height=400)
+
+        fig_7.update_layout(yaxis_title=None, xaxis_title=None)
 
         st.plotly_chart(fig_7, theme='streamlit', use_container_width=True)
 

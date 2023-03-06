@@ -63,7 +63,10 @@ def add_avg_trade_size_by_mktplace_cols(df: pd.DataFrame) -> pd.DataFrame:
 
 def calc_cat_share_by_metric(df: pd.DataFrame, cat_col: str, metric_col: str) -> pd.DataFrame:
     try:
-        piv_df = df.pivot(index=['date'], columns=[cat_col], values=[metric_col])
+        piv_df = (df
+                  .pivot(index=['date'], columns=[cat_col], values=[metric_col])
+                  .reset_index()
+                  )
 
         pct_piv_df = piv_df.set_index('date').apply(lambda x: (x / x.sum()) * 100, axis=1)
 
