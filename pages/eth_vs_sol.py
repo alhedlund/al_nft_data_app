@@ -25,7 +25,7 @@ def app():
         full_df = de.get_eth_vs_sol_nft_stats(date_trunc=date_trunc, months=month_choice)
 
         # transform df
-        trans_df = add_pct_change_cols(full_df)
+        trans_df = add_pct_change_cols(full_df, "blockchain")
 
         # distinct buyers vs. sellers df
         # buy_sell_df = de.get_distinct_buyers_vs_sellers(months=month_choice)

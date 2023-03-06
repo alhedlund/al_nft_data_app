@@ -68,7 +68,7 @@ def make_contract_request(sort_by: str, url: str, api_key: str) -> json:
     return [helper_functions.flatten(_dict) for _dict in response]
 
 
-############################################3
+############################################
 
 
 def query_to_df(query: str) -> pd.DataFrame:
