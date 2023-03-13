@@ -19,7 +19,9 @@ display = np.array(display)
 # st.title("AnonLabs Data")
 col1, col2 = st.columns(2)
 col1.image(display, width=100)
-col2.title("AnonLabs Data Platform")
+original_title = '<p style="font-family:Monospace; color:White; font-size: 24px;">AnonLabs Data Platform</p>'
+col2.markdown(original_title, unsafe_allow_html=True)
+# col2.title("AnonLabs Data Platform")
 
 # Add all your application here
 app.add_page("NFT Market Overview", nft_mkt_overview.app)
